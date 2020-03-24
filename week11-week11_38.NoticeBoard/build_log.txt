@@ -42,12 +42,12 @@
 init:
 
 -deps-jar-init:
-   [delete] Deleting: /Users/sazarov/IdeaProjects/TMCProjects/mooc-2013-OOProgrammingWithJava-PART2/week11-week11_38.NoticeBoard/build/built-jar.properties
+   [delete] Deleting: /home/jpromano/IdeaProjects/TMCProjects/mooc-2013-OOProgrammingWithJava-PART2/week11-week11_38.NoticeBoard/build/built-jar.properties
 
 deps-jar:
 
 -warn-already-built-jar:
-[propertyfile] Updating property file: /Users/sazarov/IdeaProjects/TMCProjects/mooc-2013-OOProgrammingWithJava-PART2/week11-week11_38.NoticeBoard/build/built-jar.properties
+[propertyfile] Updating property file: /home/jpromano/IdeaProjects/TMCProjects/mooc-2013-OOProgrammingWithJava-PART2/week11-week11_38.NoticeBoard/build/built-jar.properties
 
 -check-automatic-build:
 
@@ -64,12 +64,6 @@ deps-jar:
 -compile-depend:
 
 -do-compile:
-    [javac] Compiling 1 source file to /Users/sazarov/IdeaProjects/TMCProjects/mooc-2013-OOProgrammingWithJava-PART2/week11-week11_38.NoticeBoard/build/classes
-    [javac] warning: [options] bootstrap class path not set in conjunction with -source 6
-    [javac] warning: [options] source value 6 is obsolete and will be removed in a future release
-    [javac] warning: [options] target value 1.6 is obsolete and will be removed in a future release
-    [javac] warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
-    [javac] 4 warnings
 
 -post-compile:
 

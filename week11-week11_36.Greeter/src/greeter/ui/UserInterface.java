@@ -12,22 +12,23 @@ public class UserInterface implements Runnable {
 
     @Override
     public void run() {
-        frame = new JFrame();
-        frame.setPreferredSize(new Dimension(400, 200));
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setTitle("Swing on");
-        createComponents(frame.getContentPane());
+        this.frame = new JFrame ("Swing on");
+        this.frame.setPreferredSize(new Dimension(400, 200));
         
-        frame.pack();
-        frame.setVisible(true);
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        createComponents(this.frame.getContentPane());
+        
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 
     private void createComponents(Container container) {
-        JLabel label = new JLabel("Hi!");
-        container.add(label);
+        JLabel text = new JLabel("Hi!");
+        container.add(text);
     }
 
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 }

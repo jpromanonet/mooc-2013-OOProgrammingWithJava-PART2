@@ -10,44 +10,40 @@ public class UserInterface implements Runnable {
 
     @Override
     public void run() {
-        // Create your app here
-        frame = new JFrame();
-        frame.setPreferredSize(new Dimension(200,300));
-        frame.setTitle("Survey");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.frame = new JFrame("Survey");
+        this.frame.setPreferredSize(new Dimension(200, 300));
         
-        createComponent(frame.getContentPane());
-        frame.pack();
-        frame.setVisible(true);
+        this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        createComponents(this.frame.getContentPane());
+        
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 
-    public void createComponent(Container container) {
+    public void createComponents(Container container) {
         BoxLayout layout = new BoxLayout(container, BoxLayout.Y_AXIS);
         container.setLayout(layout);
-        JLabel label1 = new JLabel("Are you?");
-        container.add(label1);
-        JCheckBox cb1 = new JCheckBox("Yes!");
-        container.add(cb1);
-        JCheckBox cb2 = new JCheckBox("No!");
-        container.add(cb2);
-        JLabel label2 = new JLabel("Why?");
-        container.add(label2);
         
-        JRadioButton choice1 = new JRadioButton("No reason.");
-        JRadioButton choice2 = new JRadioButton("Because it is fun!");
+        container.add(new JLabel("Are you?"));
+        container.add(new JCheckBox("Yes!"));
+        container.add(new JCheckBox("No!"));
+        container.add(new JLabel("Why?"));
         
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(choice1);
-        bg.add(choice2);
+        JRadioButton option1 = new JRadioButton("No Reason.");
+        JRadioButton option2 = new JRadioButton("Because it is fun!");
         
-        container.add(choice1);
-        container.add(choice2);
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(option1);
+        buttonGroup.add(option2);
         
-        JButton btn = new JButton("Done!");
-        container.add(btn);
+        container.add(option1);
+        container.add(option2);
+        container.add(new JButton("Done!"));
+        
     }
 
     public JFrame getFrame() {
-        return frame;
+        return this.frame;
     }
 }

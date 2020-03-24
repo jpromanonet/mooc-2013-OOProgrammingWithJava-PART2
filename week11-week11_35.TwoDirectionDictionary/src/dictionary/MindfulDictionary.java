@@ -1,116 +1,96 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dictionary;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class MindfulDictionary {
-	private Map<String, String> dictionary;
-	private File fileDictionary;
-	
-	
-	public MindfulDictionary() {
-		dictionary = new HashMap<String, String>();
-	}
-	
-	public MindfulDictionary(String file) {
-		this();
-		fileDictionary = new File(file);
-	}
-	
-	public void add(String word, String translation) {
-		if (!dictionary.containsKey(word)) {
-			dictionary.put(word, translation);
-		}
-	}
-	
-	public String translate(String word) {
-		if (dictionary.containsKey(word)) {
-			return dictionary.get(word);
-		}
-		
-		if (dictionary.containsValue(word)) {
-			for (String key :
-					dictionary.keySet()) {
-				if (dictionary.get(key).equals(word)) {
-					return key;
-				}
-			}
-			
-		}
-		return null;
-	}
-	
-	public void remove(String word) {
-		String keyToBeRemoved = "";
-		dictionary.remove(word);
-		
-		if (dictionary.containsValue(word)) {
-			for (String key :
-					dictionary.keySet()) {
-				if (dictionary.get(key).equals(word)) {
-					keyToBeRemoved = key;
-				}
-			}
-			dictionary.remove(keyToBeRemoved);
-		}
-	}
-	
-	public boolean load() {
-		if (fileDictionary.canRead()) {
-			try {
-				readFromFileDictionary();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			return true;
-		}
-		
-		return false;
-	}
-	
-	private void readFromFileDictionary() throws FileNotFoundException {
-		Scanner reader = new Scanner(fileDictionary);
-		
-		while (reader.hasNextLine()) {
-			String line = reader.nextLine();
-			String word = line.split(":")[0];
-			String translation = line.split(":")[1];
-			
-			dictionary.put(word, translation);
-		}
-		
-		reader.close();
-	}
-	
-	public boolean save() {
-		try {
-			writeToFileDictionary();
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
-	
-	private void writeToFileDictionary() throws IOException {
-		FileWriter fileWriter = new FileWriter(fileDictionary);
-		
-		for (String key :
-				dictionary.keySet()) {
-			String value = dictionary.get(key);
-			String writtenValue = key + ":" + value;
-			
-			fileWriter.write(writtenValue + "\n");
-		}
-		
-		fileWriter.close();
-	}
+
+    private Map<String, String> dictionary;
+    private File file;
+
+    public MindfulDictionary() {
+        this.dictionary = new HashMap<String, String>();
+    }
+
+    public MindfulDictionary(String file) throws FileNotFoundException {
+        this();
+        this.file = new File(file);
+    }
+
+    public boolean load() {
+        try {
+            Scanner reader = new Scanner(this.file);
+            readFileIntoDictionary(reader);
+            reader.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public void readFileIntoDictionary(Scanner reader) {
+        while (reader.hasNextLine()) {
+            String line = reader.nextLine();
+            String[] parts = line.split(":");
+
+            this.dictionary.put(parts[0], parts[1]);
+            this.dictionary.put(parts[1], parts[0]);
+        }
+    }
+
+    public void add(String word, String translation) {
+        if (!this.dictionary.containsKey(word)) {
+            this.dictionary.put(word, translation);
+            this.dictionary.put(translation, word);
+        }
+    }
+
+    public String translate(String word) {
+        return this.dictionary.get(word);
+    }
+
+    public void remove(String word) {
+        String translation = translate(word);
+
+        this.dictionary.remove(word);
+        this.dictionary.remove(translation);
+    }
+
+    public boolean save() {
+        try {
+            FileWriter writer = new FileWriter(this.file);
+            saveWords(writer);
+            writer.close();
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void saveWords(FileWriter writer) throws IOException {
+        List<String> alreadyInFile = new ArrayList<String>();
+
+        for (String word : this.dictionary.keySet()) {
+            String translation = this.dictionary.get(word);
+
+            if (!alreadyInFile.contains(word)) {
+                String pair = word + ":" + this.dictionary.get(word);
+                writer.write(pair + "\n");
+                alreadyInFile.add(translation);
+            }
+        }
+    }
 }
